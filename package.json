@@ -1,6 +1,6 @@
 {
   "name": "@amcs/curseforge-api",
-  "version": "0.24.920",
+  "version": "0.90.0",
   "type": "module",
   "files": [
     "dist",

@@ -12,7 +12,6 @@ import Mod from "./schemas/responses/mod";
 import ModFile from "./schemas/responses/mod-file";
 
 export const BASE_URL = "https://api.curseforge.com";
-export const DEFAULT_API_KEY = process.env.CURSE_FORGE_API_KEY ?? "";
 export const GAME_ID_MINECRAFT = 432;
 export const CLASS_ID_MODS = 6;
 export const DEFAULT_PAGE_SIZE = 50;
@@ -23,26 +22,27 @@ export type QueryParameters = Record<
 >;
 
 export interface CurseForgeApiOptions {
+  apiKey: string;
   baseURL?: string;
-  apiKey?: string;
 }
 
 export default abstract class CurseForgeApi {
-  baseURL: string;
-  apiKey: string;
+  protected baseURL: string;
+  protected apiKey: string;
 
-  constructor({
-    baseURL = BASE_URL,
-    apiKey = DEFAULT_API_KEY,
-  }: CurseForgeApiOptions) {
-    this.baseURL = baseURL;
+  constructor({ apiKey, baseURL = BASE_URL }: CurseForgeApiOptions) {
     this.apiKey = apiKey;
+    this.baseURL = baseURL;
   }
 
-  get headers() {
+  protected get headers() {
     return {
       "x-api-key": this.apiKey,
     };
+  }
+
+  set API_KEY(value: string) {
+    this.apiKey = value;
   }
 
   getCategories(

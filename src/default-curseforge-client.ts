@@ -1,13 +1,13 @@
 import CurseForgeApi, { QueryParameters } from "./curseforge-api";
 
-export default class CurseForgeClient extends CurseForgeApi {
+export default class DefaultCurseForgeClient extends CurseForgeApi {
   constructor(apiKey: string) {
     super({
       apiKey,
     });
   }
 
-  async get<R>(uri: string, params?: QueryParameters): Promise<R> {
+  protected async get<R>(uri: string, params?: QueryParameters): Promise<R> {
     const url = new URL(`${this.baseURL}${uri}`);
     if (params !== undefined) {
       for (const name in params) {
@@ -17,10 +17,12 @@ export default class CurseForgeClient extends CurseForgeApi {
         }
       }
     }
+
     const resp = await fetch(url, {
       method: "GET",
       headers: this.headers,
     });
+
     const json = await resp.json();
     return json as R;
   }

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import CurseForgeClient from "./curseforge-client";
+import CurseForgeClient from "./default-curseforge-client";
 import ModLoaderType from "./schemas/commons/mod-loader-type";
 
 const apiKey = process.env.CURSE_FORGE_API_KEY ?? "";
