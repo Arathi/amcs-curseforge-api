@@ -1,5 +1,7 @@
 # CurseForge API
 
+A simple stupid CurseForge API for TypeScript.
+
 ## 功能
 
 - getCategories 获取分类
