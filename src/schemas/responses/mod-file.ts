@@ -1,14 +1,22 @@
 export default interface ModFile {
   id: number;
+  gameId: number;
   modId: number;
   displayName: string;
   fileName: string;
+  releaseType: ReleaseType;
   hashes: FileHash[];
   fileDate: string;
   fileLength: number;
   downloadCount: number;
   downloadUrl: string;
   dependencies: FileDependency[];
+}
+
+export enum ReleaseType {
+  Release = 1,
+  Beta = 2,
+  Alpha = 3,
 }
 
 export interface FileHash {
