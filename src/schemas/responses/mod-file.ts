@@ -9,7 +9,6 @@ export default interface ModFile {
   downloadCount: number;
   downloadUrl: string;
   dependencies: FileDependency[];
-  // fileModule: FileModule[];
 }
 
 export interface FileHash {
@@ -35,8 +34,3 @@ export enum FileRelationType {
   Incompatible = 5,
   Include = 6,
 }
-
-// interface FileModule {
-//   name: string;
-//   fingerprint: BigInt;
-// }

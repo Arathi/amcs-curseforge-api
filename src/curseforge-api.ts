@@ -4,18 +4,23 @@ import SearchModsParameters, {
 } from "./schemas/requests/search-mods";
 import {
   GetCategoriesResponse,
-  GetMinecraftModLoadersResponse,
-  GetMinecraftVersionsResponse,
   GetModFilesResponse,
   SearchModsResponse,
-} from "./schemas/responses";
+} from "./schemas/responses/alias";
 import DataResponse from "./schemas/responses/data";
+import Mod from "./schemas/responses/mod";
+import ModFile from "./schemas/responses/mod-file";
 
 export const BASE_URL = "https://api.curseforge.com";
 export const DEFAULT_API_KEY = process.env.CURSE_FORGE_API_KEY ?? "";
 export const GAME_ID_MINECRAFT = 432;
 export const CLASS_ID_MODS = 6;
 export const DEFAULT_PAGE_SIZE = 50;
+
+export type QueryParameters = Record<
+  string,
+  string | number | boolean | undefined
+>;
 
 export interface CurseForgeApiOptions {
   baseURL?: string;
@@ -55,7 +60,7 @@ export default abstract class CurseForgeApi {
   searchMods(params: SearchModsParameters = {}): Promise<SearchModsResponse> {
     const {
       classId = CLASS_ID_MODS,
-      categoryIdList = [],
+      categoryIds: categoryIdList = [],
       gameVersion,
       searchFilter,
       sortField = SortField.Popularity,
@@ -86,6 +91,10 @@ export default abstract class CurseForgeApi {
     });
   }
 
+  getMod(modId: number): Promise<DataResponse<Mod>> {
+    return this.get(`/v1/mods/${modId}`);
+  }
+
   getModFiles(
     modId: number,
     params: GetModFilesParameters = {}
@@ -104,6 +113,10 @@ export default abstract class CurseForgeApi {
     });
   }
 
+  getModFile(modId: number, fileId: number): Promise<DataResponse<ModFile>> {
+    return this.get(`/v1/mods/${modId}/files/${fileId}`);
+  }
+
   getModFileDownloadURL(
     modId: number,
     fileId: number
@@ -111,26 +124,5 @@ export default abstract class CurseForgeApi {
     return this.get(`/v1/mods/${modId}/files/${fileId}/download-url`);
   }
 
-  getMinecraftVersions(
-    sortDescending?: boolean
-  ): Promise<GetMinecraftVersionsResponse> {
-    return this.get(`/v1/minecraft/version`, {
-      sortDescending,
-    });
-  }
-
-  getModLoaders(
-    version?: string,
-    includeAll?: boolean
-  ): Promise<GetMinecraftModLoadersResponse> {
-    return this.get(`/v1/minecraft/modloader`, {
-      version,
-      includeAll,
-    });
-  }
-
-  abstract get<R>(
-    uri: string,
-    params?: Record<string, string | number | boolean | undefined>
-  ): Promise<R>;
+  abstract get<R>(uri: string, params?: QueryParameters): Promise<R>;
 }

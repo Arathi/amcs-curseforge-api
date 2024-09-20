@@ -1,8 +1,8 @@
-import { ModLoaderType } from "../mod-loader-type";
+import ModLoaderType from "@/schemas/commons/mod-loader-type";
 
 export default interface SearchModsParameters {
   classId?: number;
-  categoryIdList?: number[];
+  categoryIds?: number[];
   gameVersion?: string;
   searchFilter?: string;
   sortField?: SortField;
