@@ -1,7 +1,6 @@
 {
   "name": "@amcs/curseforge-api",
-  "private": false,
-  "version": "0.24.920-dev",
+  "version": "0.24.920",
   "type": "module",
   "files": [
     "dist",
@@ -16,7 +15,6 @@
     "require": "./dist/index.umd.cjs"
   },
   "scripts": {
-    "dev": "vite",
     "build": "vite build && tsc",
     "test": "vitest"
   },

@@ -124,5 +124,5 @@ export default abstract class CurseForgeApi {
     return this.get(`/v1/mods/${modId}/files/${fileId}/download-url`);
   }
 
-  abstract get<R>(uri: string, params?: QueryParameters): Promise<R>;
+  protected abstract get<R>(uri: string, params?: QueryParameters): Promise<R>;
 }
