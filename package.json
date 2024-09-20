@@ -1,7 +1,7 @@
 {
   "name": "@amcs/curseforge-api",
-  "private": true,
-  "version": "0.24.919-dev",
+  "private": false,
+  "version": "0.24.920-dev",
   "type": "module",
   "files": [
     "dist",
@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.5.5",
-    "tsx": "^4.19.1",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
     "vitest": "^2.1.1"
