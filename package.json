@@ -1,33 +1,44 @@
 {
   "name": "@amcs/curseforge-api",
-  "version": "0.90.3",
-  "type": "module",
-  "files": [
-    "dist",
-    "types"
-  ],
-  "main": "./dist/index.umd.cjs",
-  "module": "./dist/index.js",
-  "types": "./types/index.d.ts",
-  "exports": {
-    "types": "./types/index.d.ts",
-    "import": "./dist/index.js",
-    "require": "./dist/index.umd.cjs"
-  },
-  "keywords": [
-    "minecraft",
-    "curseforge",
-    "mod",
-    "api"
-  ],
+  "version": "0.91.0",
+  "types": "./dist/types/index.d.ts",
+  "main": "./dist/lib/index.js",
+  "module": "./dist/es/index.js",
   "scripts": {
-    "build": "vite build && tsc",
+    "prepare": "modern build && simple-git-hooks",
+    "dev": "modern dev",
+    "build": "modern build",
+    "build:watch": "modern build -w",
+    "reset": "npx rimraf node_modules ./**/node_modules",
+    "lint": "biome check",
+    "change": "modern change",
+    "bump": "modern bump",
+    "pre": "modern pre",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note",
+    "release": "modern release",
+    "new": "modern new",
+    "upgrade": "modern upgrade",
     "test": "vitest"
   },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --files-ignore-unknown=true"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
   "devDependencies": {
-    "@types/node": "^22.5.5",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.10",
+    "@biomejs/biome": "1.8.3",
+    "@modern-js/module-tools": "2.60.1",
+    "@types/node": "~18.19.50",
+    "jsdom": "^25.0.1",
+    "lint-staged": "~13.1.0",
+    "rimraf": "^6.0.1",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "~5.0.4",
     "vitest": "^2.1.1"
-  }
+  },
+  "sideEffects": []
 }
