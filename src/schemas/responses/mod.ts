@@ -1,6 +1,6 @@
-import Category from "./category";
+import type { Category } from "./category";
 
-export default interface Mod {
+export type Mod = {
   /**
    * 模组数字ID
    */
@@ -110,7 +110,7 @@ export default interface Mod {
    * 评分
    */
   rating?: number | null;
-}
+};
 
 export interface ModLinks {
   websiteUrl: string;

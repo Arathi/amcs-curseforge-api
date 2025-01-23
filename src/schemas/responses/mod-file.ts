@@ -1,4 +1,4 @@
-export default interface ModFile {
+export type ModFile = {
   /**
    * 文件ID
    */
@@ -64,7 +64,7 @@ export default interface ModFile {
    * 依赖关系
    */
   dependencies: FileDependency[];
-}
+};
 
 export enum ReleaseType {
   /**
@@ -83,7 +83,7 @@ export enum ReleaseType {
   Alpha = 3,
 }
 
-export interface FileHash {
+export type FileHash = {
   /**
    * 散列值
    */
@@ -93,14 +93,14 @@ export interface FileHash {
    * 散列算法
    */
   algo: HashAlgo;
-}
+};
 
 export enum HashAlgo {
   SHA1 = 1,
   MD5 = 2,
 }
 
-export interface FileDependency {
+export type FileDependency = {
   /**
    * 依赖模组ID
    */
@@ -110,7 +110,7 @@ export interface FileDependency {
    * 依赖类型
    */
   relationType: FileRelationType;
-}
+};
 
 export enum FileRelationType {
   /**

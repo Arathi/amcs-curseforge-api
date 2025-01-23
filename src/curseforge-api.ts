@@ -1,38 +1,39 @@
-import GetModFilesParameters from "./schemas/requests/get-mod-files";
-import SearchModsParameters, {
-  SortField,
-} from "./schemas/requests/search-mods";
-import {
+import type {
   GetCategoriesResponse,
-  GetModFilesResponse,
+  SearchModsParameters,
   SearchModsResponse,
-} from "./schemas/responses/alias";
-import DataResponse from "./schemas/responses/data";
-import Mod from "./schemas/responses/mod";
-import ModFile from "./schemas/responses/mod-file";
+  DataResponse,
+  Mod,
+  GetModFilesParameters,
+  GetModFilesResponse,
+  ModFile,
+} from "./schemas";
 
-export const BASE_URL = "https://api.curseforge.com";
-export const GAME_ID_MINECRAFT = 432;
-export const CLASS_ID_MODS = 6;
-export const DEFAULT_PAGE_SIZE = 50;
+import { SortField } from "./schemas";
 
-export type QueryParameters = Record<
-  string,
-  string | number | boolean | undefined
->;
+const DEFAULT_BASE_URL = "https://api.curseforge.com";
+const DEFAULT_API_KEY = process.env.CURSEFORGE_API_KEY ?? "";
+const GAME_ID_MINECRAFT = 432;
+const CLASS_ID_MODS = 6;
+const DEFAULT_PAGE_SIZE = 50;
 
-export interface CurseForgeApiOptions {
-  apiKey: string;
+export type Options = {
   baseURL?: string;
-}
+  apiKey?: string;
+};
 
-export default abstract class CurseForgeApi {
+export type Parameters = Record<string, string | number | boolean | undefined>;
+
+export class CurseForgeApi {
   protected baseURL: string;
   protected apiKey: string;
 
-  constructor({ apiKey, baseURL = BASE_URL }: CurseForgeApiOptions) {
-    this.apiKey = apiKey;
+  constructor({
+    baseURL = DEFAULT_BASE_URL,
+    apiKey = DEFAULT_API_KEY,
+  }: Options = {}) {
     this.baseURL = baseURL;
+    this.apiKey = apiKey;
   }
 
   protected get headers() {
@@ -45,12 +46,33 @@ export default abstract class CurseForgeApi {
     this.apiKey = value;
   }
 
+  protected async get<R>(uri: string, params: Parameters = {}): Promise<R> {
+    const url = this.buildURL(uri, params);
+    const resp = await fetch(url, {
+      method: "GET",
+      headers: this.headers,
+    });
+    const respJson = await resp.json();
+    return respJson as R;
+  }
+
+  protected buildURL(uri: string, params: Parameters = {}) {
+    const url = new URL(`${this.baseURL}${uri}`);
+    for (const key in params) {
+      const value = params[key];
+      if (value !== undefined) {
+        url.searchParams.append(key, value.toString());
+      }
+    }
+    return url;
+  }
+
   getCategories(
     gameId: number = GAME_ID_MINECRAFT,
     classId?: number,
     classesOnly?: boolean
   ): Promise<GetCategoriesResponse> {
-    return this.get(`/v1/categories`, {
+    return this.get("/v1/categories", {
       gameId,
       classId,
       classesOnly,
@@ -76,7 +98,7 @@ export default abstract class CurseForgeApi {
       categoryIds = categoryIdList.join(",");
     }
 
-    return this.get(`/v1/mods/search`, {
+    return this.get("/v1/mods/search", {
       gameId: GAME_ID_MINECRAFT,
       classId,
       categoryIds,
@@ -123,6 +145,4 @@ export default abstract class CurseForgeApi {
   ): Promise<DataResponse<string>> {
     return this.get(`/v1/mods/${modId}/files/${fileId}/download-url`);
   }
-
-  protected abstract get<R>(uri: string, params?: QueryParameters): Promise<R>;
 }

@@ -1,4 +1,7 @@
-export default interface Category {
+/**
+ * 分类
+ */
+export type Category = {
   /**
    * 分类ID
    */
@@ -53,4 +56,4 @@ export default interface Category {
    * 显示顺序
    */
   displayIndex?: number | null;
-}
+};

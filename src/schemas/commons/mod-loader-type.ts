@@ -1,4 +1,4 @@
-enum ModLoaderType {
+export enum ModLoaderType {
   All = 0,
   Forge = 1,
   Cauldron = 2,
@@ -7,5 +7,3 @@ enum ModLoaderType {
   Quilt = 5,
   NeoForge = 6,
 }
-
-export default ModLoaderType;
