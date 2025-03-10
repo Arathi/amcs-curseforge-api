@@ -1,6 +1,6 @@
 {
   "name": "@amcs/curseforge-api",
-  "version": "0.92.0",
+  "version": "0.92.1",
   "type": "module",
   "exports": {
     ".": {
@@ -12,7 +12,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rslib build",
     "check": "biome check --write",
@@ -22,10 +24,10 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@rslib/core": "^0.3.2",
-    "@types/node": "^22.10.8",
-    "axios": "^1.7.9",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.3"
+    "@rslib/core": "^0.5.3",
+    "@types/node": "^22.13.10",
+    "axios": "^1.8.2",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
   }
 }
